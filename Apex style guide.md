@@ -1,4 +1,4 @@
-# Polaris Apex Style Guide #
+# Apex Style Guide #
 [TOC]
 ##Intro##
 
