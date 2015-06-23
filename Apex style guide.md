@@ -42,23 +42,64 @@ Open braces should have a space before them and not a newline.  The matching clo
 
 `else`s and `else if`s do not get a newline before them.  Neither do `catch`es or `while`s in a `do...while` loop.
 
+The parenthetical clause in `if`, `while`, `do`, `catch`, etc., statements should be preceded and followed by a single space.
+
+In method definitions, there should be no space before the open parenthesis, and one space after.
+
+In method calls and definitions, there should not be whitespace between the name of the method and the open parenthesis.
+
+A single space should separate binary operators from the surrounding elements (e.g., `+`, `||`).  Unary operators (`!`, `-`) should be attached to their parameters.
+
 E.g.:
 ```
 public void foo(Integer bar) {
-  if(bar == 3) {
+  if (bar == 3) {
+    System.debug(debugCode(bar) + ' - hi there!');
     return;
-  } else if(bar > 7) {
+  } else if (bar > 7) {
     List<Integer> wasteOfSpace = new List<Integer>();
     do {
         wasteOfSpace.add(8);
-    } while(wasteOfSpace.size < 5);
+    } while (wasteOfSpace.size < 5);
   } else {
-    upsert v;
+    try {
+      upsert v;
+    } catch (Exception ex) {
+      handleException(ex);
+    }
   }
 }
 ```
 
-All `if`, `while` and `for` statements must use braces even if they control just one statement.
+### Capitalization ###
+
+We follow the Java standard of capitalization with the listed exceptions.  That means that statements (`for`, `if`, etc.) should be lowercase, constants should be `UPPER_CASE_WITH_UNDERSCORES`, classes and class-level variables should be declared as `UpperCamelCase`, and methods, parameters and local variables should all be declard as `lowerCamelCase`.
+
+Native Apex methods and classes should generally be referenced as written in official Salesforce documentation.  This means that schemas and classes are `UpperCamelCase` and methods are `lowerCamelCase`.  The only deviation from this rule is `SObject` which should be written as such (in the documentation, it is usually written `sObject` which does not conform to this style guide and should not be used).
+
+However, when referencing any metadata (SObject, SObjectField, FieldSet, Action, Class, Page, etc.), use the declared capitalization.  When referencing a method, field, etc., that is not capitalized according to these rules, use the declared capitalization.
+
+##SOQL##
+
+In general, SOQL should be declared inline where it is used.  In some cases, like when referencing FieldSets, it's necessary to build SOQL queries dynamically.  The same rules will generally apply.
+
+SOQL keywords (e.g., `SELECT`, `WHERE`, `TODAY`) should always be written in `ALL CAPS`.  Objects, fields and bind variables should be referenced as declared.  Each clause of the SOQL Query should be on its own line so that finding what changed in a diff is easier.  That is, each `SELECT`, `FROM`, `WHERE`, `AND`, `OR`, `GROUP BY`, `HAVING`, `ROLL UP`, `ORDER BY`, etc., with the exception of the first `SELECT` should start a new line.
+
+Long lists of fields in a `SELECT` clause should be ordered in a logical manner and broken to fit within page width, with subsequent lines aligned with the first field.  Always select `Id` first.
+
+Example (in context):
+
+```
+String typeToSelect = 'abcde';
+List<Contact> cnts = [SELECT Id, FirstName, LastName, Phone, Email,
+                             MailingCity, MailingState,
+                             (SELECT Id, ActivityDate, Origin, Type,
+                                     WhatId, What.Name, RecordTypeId
+                              FROM ActivityHistories
+                              WHERE Type = :typeToSelect)
+                      FROM Contact
+                      WHERE CreatedDate = TODAY];
+```
 
 
 
