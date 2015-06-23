@@ -38,9 +38,14 @@ What is important is that each class order its members in some logical order, wh
 ###Indentation###
 All blocks of code should be indented with 2 spaces.  Spaces, not tabs, to ensure that it looks the same on everyone's screen and doesn't waste horizontal space.
 
+###New-lines and spaces###
+Use vertical whitespace as appropriate.  Don't be afraid to separate blocks of code.
+
+Prefer placing comments on a line by themselves.
+
 Open braces should have a space before them and not a newline.  The matching close brace should line up with the start of the opening brace's line.
 
-`else`s and `else if`s do not get a newline before them.  Neither do `catch`es or `while`s in a `do...while` loop.
+`else`s and `else if`s do not get a new-line before them.  Neither do `catch`es or `while`s in a `do...while` loop.
 
 The parenthetical clause in `if`, `while`, `do`, `catch`, etc., statements should be preceded and followed by a single space.
 
@@ -48,28 +53,21 @@ In method definitions, there should be no space before the open parenthesis, and
 
 In method calls and definitions, there should not be whitespace between the name of the method and the open parenthesis.
 
-A single space should separate binary operators from the surrounding elements (e.g., `+`, `||`).  Unary operators (`!`, `-`) should be attached to their parameters.
+A single space should separate binary operators from the surrounding elements (e.g., `+`, `||`, `=`).  Unary operators (`!`, `-`) should be attached to their parameters.  A colon inside a `for each` loop (e.g., `for (Contact cnt : contacts) {`) should have one space on either side.
 
-E.g.:
-```
-public void foo(Integer bar) {
-  if (bar == 3) {
-    System.debug(debugCode(bar) + ' - hi there!');
-    return;
-  } else if (bar > 7) {
-    List<Integer> wasteOfSpace = new List<Integer>();
-    do {
-        wasteOfSpace.add(8);
-    } while (wasteOfSpace.size < 5);
-  } else {
-    try {
-      upsert v;
-    } catch (Exception ex) {
-      handleException(ex);
-    }
-  }
-}
-```
+If using C#-style properties, code should follow the following rules:
+
+ * Always declare the getter, then the setter.
+ * If there is no logic, it should read `{ get; set; }`.
+ * If there is logic, there should be a new-line before each open-brace, and before and after each closed-brace.
+ * If one clause has logic and one does not, place the clause without logic on its own line.
+
+### Prefer Explicit Declarations ###
+Always specify:
+
+* public/private modifiers
+* with/without sharing
+* `this` when calling local methods or setting local members/properties.
 
 ### Capitalization ###
 
@@ -79,11 +77,64 @@ Native Apex methods and classes should generally be referenced as written in off
 
 However, when referencing any metadata (SObject, SObjectField, FieldSet, Action, Class, Page, etc.), use the declared capitalization.  When referencing a method, field, etc., that is not capitalized according to these rules, use the declared capitalization.
 
+### Example ###
+
+```
+public class MyClass {
+
+  private Contact internallyUsedContact { get; set; }
+
+  public Integer calculatedInteger {
+    get {
+      return 5;
+    }
+    set {
+      this.internallyUsedContact = [SELECT Id
+                                    FROM Contact
+                                    WHERE Number_of_Peanuts__c > :value
+                                    LIMIT 1];
+    }
+  }
+
+  private Id contactId {
+    get;
+    set {
+      System.debug('Why do this?');
+      this.contactId = value;
+    }
+  }
+
+  public void foo(Integer bar) {
+    if (bar == 3) {
+      System.debug(debugCode(bar) + ' - hi there!');
+      return;
+    } else if (bar > 7) {
+      List<Integer> wasteOfSpace = new List<Integer>();
+      do {
+          wasteOfSpace.add(this.calculatedInteger);
+      } while (wasteOfSpace.size < 5);
+    } else {
+      try {
+        upsert v;
+      } catch (Exception ex) {
+        handleException(ex);
+      }
+    }
+
+    for (Integer i : wasteOfSpace) {
+      System.debug('Here\'s an integer! ' + i);
+    }
+  }
+
+}
+```
+
+
 ##SOQL##
 
 In general, SOQL should be declared inline where it is used.  In some cases, like when referencing FieldSets, it's necessary to build SOQL queries dynamically.  The same rules will generally apply.
 
-SOQL keywords (e.g., `SELECT`, `WHERE`, `TODAY`) should always be written in `ALL CAPS`.  Objects, fields and bind variables should be referenced as declared.  Each clause of the SOQL Query should be on its own line so that finding what changed in a diff is easier.  That is, each `SELECT`, `FROM`, `WHERE`, `AND`, `OR`, `GROUP BY`, `HAVING`, `ROLL UP`, `ORDER BY`, etc., with the exception of the first `SELECT` should start a new line.
+SOQL keywords (e.g., `SELECT`, `WHERE`, `TODAY`) should always be written in `ALL CAPS`.  Objects, fields and bind variables should be referenced as declared.  Each clause of the SOQL Query should be on its own line so that finding what changed in a diff is easier.  That is, each `SELECT`, `FROM`, `WHERE`, `AND`, `OR`, `GROUP BY`, `HAVING`, `ROLL UP`, `ORDER BY`, etc., with the exception of the first `SELECT` should start a new line.  That line should start in the same column as the most relevant `SELECT`.
 
 Long lists of fields in a `SELECT` clause should be ordered in a logical manner and broken to fit within page width, with subsequent lines aligned with the first field.  Always select `Id` first.
 
