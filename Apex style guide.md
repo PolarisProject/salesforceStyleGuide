@@ -1,8 +1,34 @@
 # Apex Style Guide #
-[TOC]
-##Intro##
 
-###Goals###
+<!-- MarkdownTOC depth=0 autolink=true autoanchor=true -->
+
+- [Intro][intro]
+  - [Goals][goals]
+  - [Sources][sources]
+- [Basics][basics]
+  - [Special characters][special-characters]
+    - [Whitespace][whitespace]
+    - [Special escape sequences][special-escape-sequences]
+    - [Other Non-ASCII Characters][other-non-ascii-characters]
+- [Structure][structure]
+  - [Indentation][indentation]
+  - [New-lines and spaces][new-lines-and-spaces]
+  - [Prefer Explicit Declarations][prefer-explicit-declarations]
+  - [Capitalization][capitalization]
+  - [Example][example]
+- [SOQL][soql]
+- [Naming Conventions][naming-conventions]
+  - [Class and Trigger][class-and-trigger]
+  - [Methods][methods]
+  - [Test classes][test-classes]
+
+<!-- /MarkdownTOC -->
+
+<a name="intro"></a>
+## Intro
+
+<a name="goals"></a>
+### Goals
 The goal of this style guide is like that of any other style guide.  Everyone has their own ideas of what makes code pretty.  As long as there's some logic behind that beauty, no one is right or wrong.  But it's important to have a standard so that:
 
 1. New and old developers, and outside contractors of all sorts can easily read, understand and maintain our growing code base.
@@ -10,35 +36,43 @@ The goal of this style guide is like that of any other style guide.  Everyone ha
 
 See the Internet for more arguments about why style guides are important and useful things and not just a waste of time.
 
-###Sources###
+<a name="sources"></a>
+### Sources
 Since Apex is largely a Java and C# spin-off, I am largely relying on [Google Java Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javaguide.html) first, then C# where those do not apply.  And some is just pulled out of my own opinions.
 
 This is still a living document and I'm happy to make changes.
 
-##Basics##
-###Special characters###
-####Whitespace####
+<a name="basics"></a>
+## Basics
+<a name="special-characters"></a>
+### Special characters
+<a name="whitespace"></a>
+#### Whitespace
 The only permissible whitespace characters in source code are newline and space (0x20).  Inside of a string literal, only a space is allowed.  Line must not end with spaces (`/ +$/` must not match anything in the file).  Classes should all end with a newline.
 
-####Special escape sequences####
+<a name="special-escape-sequences"></a>
+#### Special escape sequences
 For any character that has a special escape sequence (`\b`, `\t`, `\n`, `\f`, `\r`, `\"`, `\'` and `\\`), that sequence is used rather than the corresponding octal (e.g. `\012`) or Unicode (e.g. `\u000a`) escape.
 
-####Other Non-ASCII Characters####
+<a name="other-non-ascii-characters"></a>
+#### Other Non-ASCII Characters
 For the remaining non-ASCII characters, either the actual Unicode character (e.g. `∞`) or the equivalent Unicode escape (e.g. `\u221e`) is used, depending only on which makes the code easier to read and understand.
 
   > Tip: In the Unicode escape case, and occasionally even when actual Unicode characters are used, an explanatory comment can be very helpful.
 
-##Structure##
+<a name="structure"></a>
+## Structure
 
 The ordering of the members of a class can have a great effect on learnability, but there is no single correct recipe for how to do it. Different classes may order their members differently.
 
 What is important is that each class order its members in some logical order, which its maintainer could explain if asked. For example, new methods are not just habitually added to the end of the class, as that would yield "chronological by date added" ordering, which is not a logical ordering.
 
-
-###Indentation###
+<a name="indentation"></a>
+### Indentation
 All blocks of code should be indented with 2 spaces.  Spaces, not tabs, to ensure that it looks the same on everyone's screen and doesn't waste horizontal space.
 
-###New-lines and spaces###
+<a name="new-lines-and-spaces"></a>
+### New-lines and spaces
 Use vertical whitespace as appropriate.  Don't be afraid to separate blocks of code.
 
 Prefer placing comments on a line by themselves.
@@ -53,7 +87,7 @@ In method definitions, there should be no space before the open parenthesis, and
 
 In method calls and definitions, there should not be whitespace between the name of the method and the open parenthesis.
 
-A single space should separate binary operators from the surrounding elements (e.g., `+`, `||`, `=`).  Unary operators (`!`, `-`) should be attached to their parameters.  A colon inside a `for each` loop (e.g., `for (Contact cnt : contacts) {`) should have one space on either side.
+A single space should separate binary operators from the surrounding elements (e.g., `+`, `||`, `=`, `>=`).  Unary operators (`!`, `-`) should be attached to their parameters.  A colon inside a `for each` loop (e.g., `for (Contact cnt : contacts) {`) should have one space on either side.  There should be no whitespace before commas, and one space after (e.g., `System.debug(LoggingLevel.INFO, 'fsdfs');`).
 
 If using C#-style properties, code should follow the following rules:
 
@@ -62,14 +96,16 @@ If using C#-style properties, code should follow the following rules:
  * If there is logic, there should be a new-line before each open-brace, and before and after each closed-brace.
  * If one clause has logic and one does not, place the clause without logic on its own line.
 
-### Prefer Explicit Declarations ###
+<a name="prefer-explicit-declarations"></a>
+### Prefer Explicit Declarations
 Always specify:
 
-* public/private modifiers
-* with/without sharing
+* `global`/`public`/`private` modifiers - prefer `private`, and if possible, `static`
+* `with sharing`/`without sharing`
 * `this` when calling local methods or setting local members/properties.
 
-### Capitalization ###
+<a name="capitalization"></a>
+### Capitalization
 
 We follow the Java standard of capitalization with the listed exceptions.  That means that statements (`for`, `if`, etc.) should be lowercase, constants should be `UPPER_CASE_WITH_UNDERSCORES`, classes and class-level variables should be declared as `UpperCamelCase`, and methods, parameters and local variables should all be declard as `lowerCamelCase`.
 
@@ -77,7 +113,8 @@ Native Apex methods and classes should generally be referenced as written in off
 
 However, when referencing any metadata (SObject, SObjectField, FieldSet, Action, Class, Page, etc.), use the declared capitalization.  When referencing a method, field, etc., that is not capitalized according to these rules, use the declared capitalization.
 
-### Example ###
+<a name="example"></a>
+### Example
 
 ```
 public class MyClass {
@@ -106,13 +143,14 @@ public class MyClass {
 
   public void foo(Integer bar) {
     if (bar == 3) {
-      System.debug(debugCode(bar) + ' - hi there!');
+      // Diane often asks when bar is 3.
+      System.debug(this.debugCode(bar) + ' - hi there!');
       return;
     } else if (bar > 7) {
       List<Integer> wasteOfSpace = new List<Integer>();
       do {
-          wasteOfSpace.add(this.calculatedInteger);
-      } while (wasteOfSpace.size < 5);
+        wasteOfSpace.add(this.calculatedInteger);
+      } while (wasteOfSpace.size() < 5);
     } else {
       try {
         upsert v;
@@ -130,13 +168,14 @@ public class MyClass {
 ```
 
 
-##SOQL##
+<a name="soql"></a>
+## SOQL
 
 In general, SOQL should be declared inline where it is used.  In some cases, like when referencing FieldSets, it's necessary to build SOQL queries dynamically.  The same rules will generally apply.
 
 SOQL keywords (e.g., `SELECT`, `WHERE`, `TODAY`) should always be written in `ALL CAPS`.  Objects, fields and bind variables should be referenced as declared.  Each clause of the SOQL Query should be on its own line so that finding what changed in a diff is easier.  That is, each `SELECT`, `FROM`, `WHERE`, `AND`, `OR`, `GROUP BY`, `HAVING`, `ROLL UP`, `ORDER BY`, etc., with the exception of the first `SELECT` should start a new line.  That line should start in the same column as the most relevant `SELECT`.
 
-Long lists of fields in a `SELECT` clause should be ordered in a logical manner and broken to fit within page width, with subsequent lines aligned with the first field.  Always select `Id` first.
+Long lists of fields in a `SELECT` clause should be ordered in a logical manner and broken to fit within page width, with subsequent lines aligned with the first field.  Always select `Id`, and always select it first.
 
 Example (in context):
 
@@ -149,10 +188,23 @@ List<Contact> cnts = [SELECT Id, FirstName, LastName, Phone, Email,
                               FROM ActivityHistories
                               WHERE Type = :typeToSelect)
                       FROM Contact
-                      WHERE CreatedDate = TODAY];
+                      WHERE CreatedDate >= TODAY];
 ```
 
+<a name="naming-conventions"></a>
+## Naming Conventions
 
+<a name="class-and-trigger"></a>
+### Class and Trigger
+Name a class or trigger after what it does.  Triggers should be verbs and end with `Trigger` (e.g., `SyncCaseToplineWithDescriptionTrigger`).  Controllers and Controller Extensions should end with the word `Controller`.
+
+<a name="methods"></a>
+### Methods
+Methods should all be verbs.  Getters and setters should have no side effects (with the exception of setting up cached values and/or logging), and should begin with `get` or `set`.
+
+<a name="test-classes"></a>
+### Test classes
+Test classes should be named `TEST_ClassUnderTest`.  If the test is not a unit-level test but instead a broader test case, it it should be named `TEST_StuffThatsGenerallyBeingTested`.
 
 
 
