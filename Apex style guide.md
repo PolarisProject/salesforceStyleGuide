@@ -116,7 +116,7 @@ However, when referencing any metadata (SObject, SObjectField, FieldSet, Action,
 <a name="example"></a>
 ### Example
 
-```
+```java
 public class MyClass {
 
   private Contact internallyUsedContact { get; set; }
@@ -179,7 +179,7 @@ Long lists of fields in a `SELECT` clause should be ordered in a logical manner 
 
 Example (in context):
 
-```
+```java
 String typeToSelect = 'abcde';
 List<Contact> cnts = [SELECT Id, FirstName, LastName, Phone, Email,
                              MailingCity, MailingState,
