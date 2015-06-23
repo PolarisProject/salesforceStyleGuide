@@ -207,6 +207,4 @@ Methods should all be verbs.  Getters and setters should have no side effects (w
 Test classes should be named `TEST_ClassUnderTest`.  If the test is not a unit-level test but instead a broader test case, it it should be named `TEST_StuffThatsGenerallyBeingTested`.
 
 
-
-
 > Written with [StackEdit](https://stackedit.io/).
