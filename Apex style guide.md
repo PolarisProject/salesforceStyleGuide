@@ -1,26 +1,26 @@
 # Apex Style Guide #
 
-<!-- MarkdownTOC depth=0 autolink=true autoanchor=true -->
+<!-- MarkdownTOC depth=0 autolink=true autoanchor=true bracket=round -->
 
-- [Intro][intro]
-  - [Goals][goals]
-  - [Sources][sources]
-- [Basics][basics]
-  - [Special characters][special-characters]
-    - [Whitespace][whitespace]
-    - [Special escape sequences][special-escape-sequences]
-    - [Other Non-ASCII Characters][other-non-ascii-characters]
-- [Structure][structure]
-  - [Indentation][indentation]
-  - [New-lines and spaces][new-lines-and-spaces]
-  - [Prefer Explicit Declarations][prefer-explicit-declarations]
-  - [Capitalization][capitalization]
-  - [Example][example]
-- [SOQL][soql]
-- [Naming Conventions][naming-conventions]
-  - [Class and Trigger][class-and-trigger]
-  - [Methods][methods]
-  - [Test classes][test-classes]
+- [Intro](#intro)
+  - [Goals](#goals)
+  - [Sources](#sources)
+- [Basics](#basics)
+  - [Special characters](#special-characters)
+    - [Whitespace](#whitespace)
+    - [Special escape sequences](#special-escape-sequences)
+    - [Other Non-ASCII Characters](#other-non-ascii-characters)
+- [Structure](#structure)
+  - [Indentation](#indentation)
+  - [New-lines and spaces](#new-lines-and-spaces)
+  - [Prefer Explicit Declarations](#prefer-explicit-declarations)
+  - [Capitalization](#capitalization)
+  - [Example](#example)
+- [SOQL](#soql)
+- [Naming Conventions](#naming-conventions)
+  - [Class and Trigger](#class-and-trigger)
+  - [Methods](#methods)
+  - [Test classes](#test-classes)
 
 <!-- /MarkdownTOC -->
 
