@@ -14,6 +14,7 @@
   - [Indentation](#indentation)
   - [New-lines and spaces](#new-lines-and-spaces)
   - [Prefer Explicit Declarations](#prefer-explicit-declarations)
+  - [`@isTest`](#istest)
   - [Capitalization](#capitalization)
   - [Example](#example)
 - [SOQL](#soql)
@@ -103,6 +104,10 @@ Always specify:
 * `global`/`public`/`private` modifiers - prefer `private`, and if possible, `static`
 * `with sharing`/`without sharing`
 * `this` when calling local methods or setting local members/properties.
+
+<a name="istest"></a>
+### `@isTest`
+In a test method, use the `@isTest` attribute instead of the `testmethod` modifier.
 
 <a name="capitalization"></a>
 ### Capitalization
