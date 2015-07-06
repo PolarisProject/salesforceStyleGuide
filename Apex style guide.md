@@ -18,6 +18,8 @@
   - [Capitalization](#capitalization)
   - [Example](#example)
 - [SOQL](#soql)
+- [Apex-Specific SObject Constructor Syntax](#apex-specific-sobject-constructor-syntax)
+- [Test.startTest() and Test.stopTest()](#teststarttest-and-teststoptest)
 - [Naming Conventions](#naming-conventions)
   - [Class and Trigger](#class-and-trigger)
   - [Methods](#methods)
@@ -195,6 +197,24 @@ List<Contact> cnts = [SELECT Id, FirstName, LastName, Phone, Email,
                       FROM Contact
                       WHERE CreatedDate >= TODAY];
 ```
+
+<a name="apex-specific-sobject-constructor-syntax"></a>
+## Apex-Specific SObject Constructor Syntax
+When creating an SObject, generally prefer the Apex-specific syntax wherein all fields can be initialized from the constructor.  When using this syntax, choose a different line for each property so that diff-ing and versioning is easier.
+
+Example:
+
+```java
+Contact c = new Contact(RecordTypeId = CONTACT_RECORDTYPE_ID,
+                        FirstName = firstName,
+                        LastName = surname,
+                        MailingCountry = DEFAULT_COUNTRY
+                       );
+```
+
+<a name="teststarttest-and-teststoptest"></a>
+## Test.startTest() and Test.stopTest()
+When writing test cases, always use `Test.startTest();` and `Test.stopTest();`.  Do not indent the code between those method calls, but do use one line of vertical whitespace above and below those method calls to seprate those lines from surrounding code.
 
 <a name="naming-conventions"></a>
 ## Naming Conventions
