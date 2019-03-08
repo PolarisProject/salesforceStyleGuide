@@ -214,7 +214,7 @@ Contact c = new Contact(RecordTypeId = CONTACT_RECORDTYPE_ID,
 
 <a name="teststarttest-and-teststoptest"></a>
 ## Test.startTest() and Test.stopTest()
-When writing test cases, always use `Test.startTest();` and `Test.stopTest();`.  Do not indent the code between those method calls, but do use one line of vertical whitespace above and below those method calls to seprate those lines from surrounding code.
+When writing test cases, always use `Test.startTest();` and `Test.stopTest();`.  Always indent the code between those method calls.
 
 <a name="naming-conventions"></a>
 ## Naming Conventions
